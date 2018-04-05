@@ -21,9 +21,11 @@ jobs:
     ### Stage 1: Static file analysis
     ###
     - stage: static file analysis
-      install: skip
+      install:
+        - git clone https://github.com/cytopia/awesome-ci /tmp/awesome-ci
+        - cd /tmp/awesome-ci && ./configure --prefix=/usr/local && make install
       script:
-        - echo "NOP"
+        - ./tests/static-file-checks.sh
 
     ###
     ### Stage 2: Build, Test and Deploy

@@ -31,5 +31,9 @@ echo
 
 echo "[CHECK] Checking java version"
 echo "------------------------------------------------------------"
-docker run "${1}:${2}" 2>&1 | grep -io "java version \"${3}"
+if [ "${3}" -eq "8" ]; then
+	docker run "${1}:${2}" 2>&1 | grep -io "java version \"1.${3}."
+else
+	docker run "${1}:${2}" 2>&1 | grep -io "java version \"${3}."
+fi
 echo
