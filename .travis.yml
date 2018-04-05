@@ -39,25 +39,23 @@ jobs:
       install:
         - max=100; i=0; while [ $i -lt $max ]; do if sudo apt-get update; then break; else i=$((i+1)); fi done
         - max=100; i=0; while [ $i -lt $max ]; do if sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce; then break; else i=$((i+1)); fi done
-      script:
+      before_script:
         - ./tests/build.sh "${image}" "${java}"
         - ./tests/check.sh "${image}" "${java}" "8"
-      deploy:
-        skip_cleanup: true
-        provider: script
-        script:
-          - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
-              if [ "${TRAVIS_BRANCH}" == "master" ]; then
-                echo "[NOP] docker push ${image}:${java}";
-              elif [ -n "${TRAVIS_TAG}" ]; then
-                echo "[NOP] docker tag ${image}:${java} ${image}:${java}-${TRAVIS_TAG}";
-                echo "[NOP] docker push ${image}:${java}-${TRAVIS_TAG}";
-              else
-                echo "Skipping push to dockerhub on normal branches";
-              fi
+      script:
+        - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
+            docker login --username "${DOCKERHUB_USERNAME}" --password "${DOCKERHUB_PASSWORD}" &&
+            if [ "${TRAVIS_BRANCH}" == "master" ]; then
+              docker push "${image}:${java}";
+            elif [ -n "${TRAVIS_TAG}" ]; then
+              docker tag "${image}:${java}" "${image}:${java}-${TRAVIS_TAG}";
+              docker push "${image}:${java}-${TRAVIS_TAG}";
             else
-              echo "Skipping push to dockerhub on PR";
+              echo "Skipping push to dockerhub on normal branches";
             fi
+          else
+            echo "Skipping push to dockerhub on PR";
+          fi
 
     # [Stage 2] [Job 2]
     - stage: build and deploy
@@ -65,22 +63,20 @@ jobs:
       install:
         - max=100; i=0; while [ $i -lt $max ]; do if sudo apt-get update; then break; else i=$((i+1)); fi done
         - max=100; i=0; while [ $i -lt $max ]; do if sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce; then break; else i=$((i+1)); fi done
-      script:
+      before_script:
         - ./tests/build.sh "${image}" "${java}"
         - ./tests/check.sh "${image}" "${java}" "9"
-      deploy:
-        skip_cleanup: true
-        provider: script
-        script:
-          - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
-              if [ "${TRAVIS_BRANCH}" == "master" ]; then
-                echo "[NOP] docker push ${image}:${java}";
-              elif [ -n "${TRAVIS_TAG}" ]; then
-                echo "[NOP] docker tag ${image}:${java} ${image}:${java}-${TRAVIS_TAG}";
-                echo "[NOP] docker push ${image}:${java}-${TRAVIS_TAG}";
-              else
-                echo "Skipping push to dockerhub on normal branches";
-              fi
+      script:
+        - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
+            docker login --username "${DOCKERHUB_USERNAME}" --password "${DOCKERHUB_PASSWORD}" &&
+            if [ "${TRAVIS_BRANCH}" == "master" ]; then
+              docker push "${image}:${java}";
+            elif [ -n "${TRAVIS_TAG}" ]; then
+              docker tag "${image}:${java}" "${image}:${java}-${TRAVIS_TAG}";
+              docker push "${image}:${java}-${TRAVIS_TAG}";
             else
-              echo "Skipping push to dockerhub on PR";
+              echo "Skipping push to dockerhub on normal branches";
             fi
+          else
+            echo "Skipping push to dockerhub on PR";
+          fi
