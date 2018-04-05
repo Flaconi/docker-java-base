@@ -22,8 +22,10 @@ jobs:
     ###
     - stage: static file analysis
       install:
+        - max=100; i=0; while [ $i -lt $max ]; do if sudo apt-get update; then break; else i=$((i+1)); fi done
+        - max=100; i=0; while [ $i -lt $max ]; do if sudo apt-get -y install moreutils; then break; else i=$((i+1)); fi done
         - git clone https://github.com/cytopia/awesome-ci /tmp/awesome-ci
-        - cd /tmp/awesome-ci && ./configure --prefix=/usr/local && sudo make install
+        - sh -c "cd /tmp/awesome-ci && ./configure --prefix=/usr/local && sudo make install"
       script:
         - ./tests/static-file-checks.sh
 
