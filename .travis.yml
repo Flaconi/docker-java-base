@@ -37,7 +37,7 @@ jobs:
         - max=100; i=0; while [ $i -lt $max ]; do if sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce; then break; else i=$((i+1)); fi done
       script:
         - ./tests/build.sh "${image}" "${java}"
-        - ./tests/test.sh "${image}" "${java}"
+        - ./tests/check.sh "${image}" "${java}" "8"
       deploy:
         skip_cleanup: true
         provider: script
@@ -63,7 +63,7 @@ jobs:
         - max=100; i=0; while [ $i -lt $max ]; do if sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce; then break; else i=$((i+1)); fi done
       script:
         - ./tests/build.sh "${image}" "${java}"
-        - ./tests/test.sh "${image}" "${java}"
+        - ./tests/check.sh "${image}" "${java}" "9"
       deploy:
         skip_cleanup: true
         provider: script
