@@ -1,5 +1,7 @@
 # Docker base images for Java
 
+[![Build Status](https://travis-ci.org/Flaconi/docker-java-base.svg?branch=master)](https://travis-ci.org/Flaconi/docker-java-base)
+
 Base images for Java.
 
 ## Options
