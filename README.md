@@ -1,5 +1,7 @@
 # Docker base images for Java
 
+[![Build Status](https://travis-ci.org/Flaconi/docker-java-base.svg?branch=master)](https://travis-ci.org/Flaconi/docker-java-base)
+
 Base images for Java.
 
 ## Options
@@ -21,3 +23,9 @@ By running any of those Docker images they will simply output their version.
 |---------------------|-------------------------|----------------|
 | `flaconi/java-base` | `:stretch-oracle-java8` | Debian stretch |
 | `flaconi/java-base` | `:stretch-oracle-java9` | Debian stretch |
+
+
+## License
+
+By using the Oracle Docker images you need to agree to the terms and conditions of the
+JDK's [binary code license](http://www.oracle.com/technetwork/java/javase/terms/license/index.html).
