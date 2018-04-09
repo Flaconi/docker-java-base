@@ -35,6 +35,8 @@ RUN set -x \
 	# Install build deps and run deps
 	&& apt-get install --no-install-recommends --no-install-suggests -y \
 		${BUILD_DEPS} \
+	# Fix Debian slim env
+	&& mkdir -p /usr/share/man/man1 \
 	# Install Oracle deb repositories
 	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-keys "${ORACLE_KEY}" \
 	&& add-apt-repository "${ORACLE_REP}" \
