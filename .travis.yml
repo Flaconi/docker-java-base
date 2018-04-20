@@ -59,30 +59,6 @@ jobs:
 
     # [Stage 2] [Job 2]
     - stage: build and deploy
-      env: java=stretch-oracle-java9
-      install:
-        - max=100; i=0; while [ $i -lt $max ]; do if sudo apt-get update; then break; else i=$((i+1)); fi done
-        - max=100; i=0; while [ $i -lt $max ]; do if sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce; then break; else i=$((i+1)); fi done
-      before_script:
-        - ./tests/build.sh "${image}" "${java}"
-        - ./tests/check.sh "${image}" "${java}" "9"
-      script:
-        - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
-            echo "${DOCKERHUB_PASSWORD}" | docker login --username "${DOCKERHUB_USERNAME}" --password-stdin &&
-            if [ "${TRAVIS_BRANCH}" == "master" ]; then
-              docker push "${image}:${java}";
-            elif [ -n "${TRAVIS_TAG}" ]; then
-              docker tag "${image}:${java}" "${image}:${java}-${TRAVIS_TAG}";
-              docker push "${image}:${java}-${TRAVIS_TAG}";
-            else
-              echo "Skipping push to dockerhub on normal branches";
-            fi
-          else
-            echo "Skipping push to dockerhub on PR";
-          fi
-
-    # [Stage 2] [Job 3]
-    - stage: build and deploy
       env: java=stretch-slim-oracle-java8
       install:
         - max=100; i=0; while [ $i -lt $max ]; do if sudo apt-get update; then break; else i=$((i+1)); fi done
@@ -90,30 +66,6 @@ jobs:
       before_script:
         - ./tests/build.sh "${image}" "${java}"
         - ./tests/check.sh "${image}" "${java}" "8"
-      script:
-        - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
-            echo "${DOCKERHUB_PASSWORD}" | docker login --username "${DOCKERHUB_USERNAME}" --password-stdin &&
-            if [ "${TRAVIS_BRANCH}" == "master" ]; then
-              docker push "${image}:${java}";
-            elif [ -n "${TRAVIS_TAG}" ]; then
-              docker tag "${image}:${java}" "${image}:${java}-${TRAVIS_TAG}";
-              docker push "${image}:${java}-${TRAVIS_TAG}";
-            else
-              echo "Skipping push to dockerhub on normal branches";
-            fi
-          else
-            echo "Skipping push to dockerhub on PR";
-          fi
-
-    # [Stage 2] [Job 4]
-    - stage: build and deploy
-      env: java=stretch-slim-oracle-java9
-      install:
-        - max=100; i=0; while [ $i -lt $max ]; do if sudo apt-get update; then break; else i=$((i+1)); fi done
-        - max=100; i=0; while [ $i -lt $max ]; do if sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce; then break; else i=$((i+1)); fi done
-      before_script:
-        - ./tests/build.sh "${image}" "${java}"
-        - ./tests/check.sh "${image}" "${java}" "9"
       script:
         - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
             echo "${DOCKERHUB_PASSWORD}" | docker login --username "${DOCKERHUB_USERNAME}" --password-stdin &&
