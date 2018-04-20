@@ -44,7 +44,7 @@ jobs:
         - ./tests/check.sh "${image}" "${java}" "8"
       script:
         - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
-            docker login --username "${DOCKERHUB_USERNAME}" --password "${DOCKERHUB_PASSWORD}" &&
+            echo "${DOCKERHUB_PASSWORD}" | docker login --username "${DOCKERHUB_USERNAME}" --password-stdin &&
             if [ "${TRAVIS_BRANCH}" == "master" ]; then
               docker push "${image}:${java}";
             elif [ -n "${TRAVIS_TAG}" ]; then
@@ -68,7 +68,7 @@ jobs:
         - ./tests/check.sh "${image}" "${java}" "9"
       script:
         - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
-            docker login --username "${DOCKERHUB_USERNAME}" --password "${DOCKERHUB_PASSWORD}" &&
+            echo "${DOCKERHUB_PASSWORD}" | docker login --username "${DOCKERHUB_USERNAME}" --password-stdin &&
             if [ "${TRAVIS_BRANCH}" == "master" ]; then
               docker push "${image}:${java}";
             elif [ -n "${TRAVIS_TAG}" ]; then
@@ -92,7 +92,7 @@ jobs:
         - ./tests/check.sh "${image}" "${java}" "8"
       script:
         - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
-            docker login --username "${DOCKERHUB_USERNAME}" --password "${DOCKERHUB_PASSWORD}" &&
+            echo "${DOCKERHUB_PASSWORD}" | docker login --username "${DOCKERHUB_USERNAME}" --password-stdin &&
             if [ "${TRAVIS_BRANCH}" == "master" ]; then
               docker push "${image}:${java}";
             elif [ -n "${TRAVIS_TAG}" ]; then
@@ -116,7 +116,7 @@ jobs:
         - ./tests/check.sh "${image}" "${java}" "9"
       script:
         - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
-            docker login --username "${DOCKERHUB_USERNAME}" --password "${DOCKERHUB_PASSWORD}" &&
+            echo "${DOCKERHUB_PASSWORD}" | docker login --username "${DOCKERHUB_USERNAME}" --password-stdin &&
             if [ "${TRAVIS_BRANCH}" == "master" ]; then
               docker push "${image}:${java}";
             elif [ -n "${TRAVIS_TAG}" ]; then
