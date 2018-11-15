@@ -31,9 +31,14 @@ echo
 
 echo "[CHECK] Checking java version"
 echo "------------------------------------------------------------"
-if [ "${3}" -eq "8" ]; then
-	docker run "${1}:${2}" 2>&1 | grep -io "java version \"1.${3}."
+if [[ "${2}" =~ "openjdk" ]]; then
+	# OpenJDK Java returns a different version string
+	docker run "${1}:${2}" 2>&1 | grep -io "openjdk version \"1.${3}."
 else
-	docker run "${1}:${2}" 2>&1 | grep -io "java version \"${3}."
+	if [ "${3}" -eq "8" ]; then
+		docker run "${1}:${2}" 2>&1 | grep -io "java version \"1.${3}."
+	else
+		docker run "${1}:${2}" 2>&1 | grep -io "java version \"${3}."
+	fi
 fi
 echo
