@@ -36,7 +36,7 @@ RUN set -x \
 	&& apt-get install --no-install-recommends --no-install-suggests -y \
 		${BUILD_DEPS} \
 	# Install Oracle deb repositories
-	&& apt-key adv --keyserver keyserver.ubuntu.com --recv-keys "${ORACLE_KEY}" \
+	&& apt-key adv --no-tty --keyserver keyserver.ubuntu.com --recv-keys "${ORACLE_KEY}" \
 	&& add-apt-repository "${ORACLE_REP}" \
 	&& apt-get update \
 	# Install Oracle Java (auto-accepting licence with YES prepended) and other tools
