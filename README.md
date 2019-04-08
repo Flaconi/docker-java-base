@@ -22,12 +22,13 @@ By running any of those Docker images they will simply output their version.
 
 ## Docker images
 
-| Docker Image        | Docker Tag                   | OS                  | Java version  |
-|---------------------|------------------------------|---------------------|---------------|
-| `flaconi/java-base` | `:stretch-oracle-java8`      | Debian stretch      | Oracle Java 8 |
-| `flaconi/java-base` | `:stretch-oracle-java9`      | Debian stretch      | Oracle Java 9 |
-| `flaconi/java-base` | `:stretch-slim-oracle-java8` | Debian stretch slim | Oracle Java 8 |
-| `flaconi/java-base` | `:stretch-slim-oracle-java9` | Debian stretch slim | Oracle Java 9 |
+| Docker Image        | Docker Tag                    | OS                  | Java version  |
+|---------------------|-------------------------------|---------------------|---------------|
+| `flaconi/java-base` | `:stretch-oracle-java8`       | Debian stretch      | Oracle Java 8 |
+| `flaconi/java-base` | `:stretch-oracle-java9`       | Debian stretch      | Oracle Java 9 |
+| `flaconi/java-base` | `:stretch-slim-oracle-java8`  | Debian stretch slim | Oracle Java 8 |
+| `flaconi/java-base` | `:stretch-slim-oracle-java9`  | Debian stretch slim | Oracle Java 9 |
+| `flaconi/java-base` | `:stretch-slim-openjdk-java8` | Debian stretch slim | Open Java 8   |
 
 
 ## License
