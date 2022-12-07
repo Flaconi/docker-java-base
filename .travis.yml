@@ -14,15 +14,8 @@ jobs:
     ### Stage 1: Static file analysis
     ###
     - stage: static file analysis
-      install:
-        # Repeat "apt-get update" multiple times in case of network issues
-        - max=100; i=0; while [ $i -lt $max ]; do if sudo apt-get update; then break; else i=$((i+1)); fi done
-        # Repeat "apt-get install" multiple times in case of network issues
-        - max=100; i=0; while [ $i -lt $max ]; do if sudo apt-get -y install moreutils; then break; else i=$((i+1)); fi done
-        - git clone https://github.com/Flaconi/awesome-ci /tmp/awesome-ci
-        - sh -c "cd /tmp/awesome-ci && ./configure --prefix=/usr/local && sudo make install"
       script:
-        - ./tests/static-file-checks.sh
+        - make lint
 
     ###
     ### Stage 2: Build, Test and Deploy
@@ -39,7 +32,7 @@ jobs:
         - make test  TAG="${java}" VERSION=8
       script:
         - if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
-            make login USER="${DOCKERHUB_USERNAME}" PASS="${DOCKERHUB_PASSWORD}";
+            make login USER="${DOCKER_USERNAME}" PASS="${DOCKER_PASSWORD}";
             if [ "${TRAVIS_BRANCH}" == "master" ]; then
               make push TAG="${java}";
             elif [ -n "${TRAVIS_TAG}" ]; then
